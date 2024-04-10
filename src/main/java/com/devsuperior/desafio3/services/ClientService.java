@@ -1,7 +1,5 @@
 package com.devsuperior.desafio3.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +45,11 @@ public class ClientService {
 		//salvar no banco
 		entity = repository.save(entity);		
 		return new ClientDTO(entity);		
+	}
+	//deletar
+	@Transactional
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 	
 	public void copyDtoToEntity(ClientDTO dto, Client entity) {
