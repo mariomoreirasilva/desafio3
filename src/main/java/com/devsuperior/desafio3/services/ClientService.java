@@ -11,6 +11,8 @@ import com.devsuperior.desafio3.entities.Client;
 import com.devsuperior.desafio3.repositories.ClientRepository;
 import com.devsuperior.desafio3.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ClientService {
 	@Autowired
@@ -41,15 +43,26 @@ public class ClientService {
 	//atualizar cliente
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO dto) {
+		try {
 		Client entity = repository.getReferenceById(id);
 		copyDtoToEntity(dto, entity);
 		//salvar no banco
 		entity = repository.save(entity);		
-		return new ClientDTO(entity);		
+		return new ClientDTO(entity);
+		} catch (EntityNotFoundException e) {
+			//excessão que apare na console
+			throw new ResourceNotFoundException("Recurso não encontrado.");
+			
+		}
 	}
 	//deletar
 	@Transactional
 	public void delete(Long id) {
+		//lançar erro 404 customizado se não encontrar tb
+		if(!repository.existsById(id)) {
+			throw new ResourceNotFoundException("Recurso não encontrado.");
+		}
+		else
 		repository.deleteById(id);
 	}
 	
