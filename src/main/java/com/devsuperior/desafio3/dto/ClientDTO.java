@@ -34,6 +34,30 @@ public class ClientDTO {
 		birthDate = entity.getBirthDate();
 		children = entity.getChildren();		
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public Double getIncome() {
+		return income;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public Integer getChildren() {
+		return children;
+	}
+
 
 }
